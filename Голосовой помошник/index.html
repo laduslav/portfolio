@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech</title>
+</head>
+<body>
+    
+<button onclick="speech ()">Сказать</button>
+
+
+<script>
+    var recognizer = new webkitSpeechRecognition();
+
+    recognizer.interimResults = true;
+
+    recognizer.lang = 'ru-Ru';
+    recognizer.onresult = function (event) {
+        var result = event.results[event.resultIndex];
+        if (result.isFinal) {
+
+            document.write('Вы сказали: ' + result[0].transcript);
+
+
+            if(result[0].transcript == 'Создать документ'){document.write('<br>Документ создан');}
+            else if (result[0].transcript == 'создай документ'){document.write('<br>Документ уже создан');} 
+        } else {
+            console.log('Промежуточный результат: ', result[0].transcript);
+        }
+    };
+
+    function speech () {
+        recognizer.start();
+    }
+
+    var synth = window.speechSynthesis;
+    var utterance = new SpeechSynthesisUtterance('How about we say this now& This is quitte a long sentence to say.');
+
+    function talk () {
+        synth.speak (utterance);
+    }
+
+    function stop () {
+        synth.pause;
+    }
+
+
+</script>
+</body>
+</html>
